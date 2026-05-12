@@ -365,18 +365,59 @@
   }
 
   /* ===== PROMPT BLOCK ===== */
+  /* ===== SAVE TIP (Stage 4 callout) ===== */
+  .save-tip {
+    background: rgba(253, 230, 138, 0.22);
+    border: 0.5px solid rgba(217, 119, 6, 0.25);
+    border-radius: 4px;
+    padding: 1.25rem 1.4rem;
+    margin: 1.5rem 0 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .save-tip::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: 0.6;
+  }
+  .save-tip-label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: var(--amber-deep);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+  .save-tip p {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.95rem;
+    max-width: none;
+  }
+
   /* ===== PRINCIPLE CARDS (Stage 0) ===== */
   .principle-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     margin: 1.5rem 0 2rem;
+  }
+  @media (max-width: 900px) {
+    .principle-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .principle-grid { grid-template-columns: 1fr; }
   }
   .principle {
     background: rgba(250, 245, 232, 0.5);
     border: 0.5px solid var(--rule);
     border-radius: 4px;
-    padding: 1.5rem 1.25rem 1.4rem;
+    padding: 1.4rem 1.15rem 1.3rem;
     position: relative;
     overflow: hidden;
     transition: all 0.35s ease;
@@ -1294,10 +1335,20 @@ Before building the website, ask me any clarifying questions you need.</div>
       <!-- STAGE 4 -->
       <section class="stage" data-stage="4" role="tabpanel">
         <div class="stage-num">Stage four</div>
-        <h2>Future <em>improvements</em></h2>
-        <p class="stage-note">Once your tool is working, it becomes a foundation you can keep building on.</p>
+        <h2>Save and keep <em>building</em></h2>
+        <p class="stage-note">Once you're happy with how your tool works, save a copy. Then think about what comes next.</p>
 
-        <p>Later, you can:</p>
+        <h3>Save your tool</h3>
+        <p>Once you're happy with how the tool functions, download the HTML file onto your desktop. This becomes the version you use in class.</p>
+        <p>If you want to make changes later (new questions, new topics, a different colour scheme), go back into Claude, ask for the changes, and download the new HTML file. The version on your desktop is a snapshot, not a live document, so each round of edits needs a fresh download.</p>
+
+        <div class="save-tip">
+          <div class="save-tip-label">Quick tip</div>
+          <p>Keep your question banks in a separate document (Word, OneNote, a notes app). That way, when you want to add new questions to Claude, you don't have to retype them.</p>
+        </div>
+
+        <h3>Future improvements</h3>
+        <p>Your first version is a foundation. Later, you can:</p>
         <ol>
           <li>Expand your question banks</li>
           <li>Add varying difficulty levels (e.g. Foundation, Core, Advanced)</li>
