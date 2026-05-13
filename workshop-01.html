@@ -103,7 +103,7 @@
 
   /* ===== CONTAINER ===== */
   .container {
-    max-width: 880px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 4vw, 3rem);
     position: relative;
@@ -199,44 +199,77 @@
     max-width: 50ch;
   }
 
-  /* ===== PROGRESS STEPPER ===== */
+  /* ===== WORKSHOP LAYOUT (stepper sidebar + content) ===== */
+  .workshop-layout {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  @media (max-width: 840px) {
+    .workshop-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  /* ===== VERTICAL STEPPER ===== */
   .stepper {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     gap: 0;
-    margin-bottom: 2.25rem;
-    padding: 0;
+    padding: 0.25rem 0;
+    position: sticky;
+    top: 1.5rem;
   }
+  @media (max-width: 840px) {
+    .stepper {
+      position: static;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 0.5px solid var(--rule-soft);
+    }
+  }
+
   .step-pip {
     position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.85rem;
     cursor: pointer;
     background: transparent;
     border: none;
     font-family: inherit;
-    padding: 0.5rem 0.25rem;
+    padding: 0.55rem 0;
     color: var(--ink-muted);
     transition: color 0.3s ease;
-    flex: 0 0 auto;
+    text-align: left;
+  }
+  @media (max-width: 840px) {
+    .step-pip {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 0.4rem 0.2rem;
+      text-align: center;
+    }
   }
   .step-pip:hover { color: var(--ink-soft); }
   .pip-dot {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--paper);
     border: 1px solid var(--rule);
     transition: all 0.35s ease;
     position: relative;
+    flex: 0 0 auto;
   }
   .step-pip.active .pip-dot {
     background: var(--amber);
     border-color: var(--amber-deep);
-    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.25), 0 0 16px rgba(251, 191, 36, 0.5);
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.25), 0 0 14px rgba(251, 191, 36, 0.4);
   }
   .step-pip.complete .pip-dot {
     background: var(--amber-deep);
@@ -246,14 +279,14 @@
     content: '';
     position: absolute;
     top: 50%; left: 50%;
-    width: 6px; height: 3px;
+    width: 5px; height: 2.5px;
     border-left: 1.5px solid var(--paper);
     border-bottom: 1.5px solid var(--paper);
     transform: translate(-50%, -65%) rotate(-45deg);
   }
   .pip-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.22em;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -262,12 +295,19 @@
   .step-pip.complete .pip-label { color: var(--ink-soft); }
 
   .step-connector {
-    width: clamp(40px, 8vw, 90px);
-    height: 1px;
+    width: 1px;
+    height: 20px;
     background: var(--rule);
-    margin: 0 0.4rem;
-    transform: translateY(-8px);
+    margin: 0 0 0 5.5px;
     transition: background 0.35s ease;
+  }
+  @media (max-width: 840px) {
+    .step-connector {
+      width: clamp(20px, 4vw, 50px);
+      height: 1px;
+      margin: 0 0.2rem;
+      transform: translateY(-12px);
+    }
   }
   .step-connector.passed { background: var(--amber-deep); }
 
@@ -338,14 +378,14 @@
     margin-bottom: 1rem;
     color: var(--ink);
     font-size: 1rem;
-    max-width: 65ch;
+    max-width: 75ch;
   }
   .stage p + ul, .stage p + ol { margin-top: -0.25rem; }
 
   .stage ul, .stage ol {
     margin: 0.5rem 0 1.5rem;
     padding-left: 1.5rem;
-    max-width: 65ch;
+    max-width: 75ch;
   }
   .stage li {
     margin-bottom: 0.5rem;
@@ -879,9 +919,6 @@
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 600px) {
-    .pip-label { display: none; }
-    .step-connector { width: 30px; }
-    .step-pip { padding: 0.25rem; }
     .stage-actions { flex-direction: column-reverse; align-items: stretch; }
     .nav-btn { justify-content: center; }
   }
@@ -937,7 +974,9 @@
       <h1 class="workshop-title">Claude: <em>Review &amp; Retrieval</em> Tool</h1>
     </div>
 
-    <!-- ===== STEPPER ===== -->
+    <div class="workshop-layout">
+
+    <!-- ===== STEPPER (left sidebar) ===== -->
     <div class="stepper" role="tablist" aria-label="Workshop stages">
       <button class="step-pip active" data-step="0" role="tab" aria-selected="true">
         <span class="pip-dot"></span>
@@ -965,18 +1004,17 @@
       </button>
     </div>
 
-    <!-- ===== STAGES ===== -->
+    <!-- ===== STAGES (right content) ===== -->
     <div class="stages">
 
       <!-- STAGE 0 -->
       <section class="stage active" data-stage="0" role="tabpanel">
-        <div class="stage-num">Before we begin</div>
         <h2>The <em>why</em> behind today's workshop</h2>
         <p class="stage-note">A few minutes here will shape everything that follows.</p>
 
         <p>By the end of today, you'll have made a start on your own review and retrieval tool. A small website you can use at the start of any lesson. You may not finish it today, and that's okay. The aim is to leave with the skills and confidence to keep building.</p>
 
-        <p>Before we begin, it helps to know what makes a review and retrieval tool effective. The four principles below are grounded in cognitive science research on memory and learning.</p>
+        <p>Before you create your review and retrieval tool, it helps to know what makes one effective. The four principles below are grounded in cognitive science research on memory and learning.</p>
 
         <div class="principle-grid">
 
@@ -1380,6 +1418,8 @@ Before building the website, ask me any clarifying questions you need.</div>
       </section>
 
     </div>
+
+    </div><!-- /workshop-layout -->
 
     <footer>
       <div>Project Firefly · Killester College</div>
